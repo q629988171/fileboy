@@ -306,6 +306,18 @@ func parseArgs() {
 			parseConfig()
 			newTaskMan(0, cfg.Notifier.CallUrl).run(new(changedFile))
 			return
+		case "profile":
+			filegirlYamlName = os.Args[2]
+			show()
+			parseConfig()
+			done := make(chan bool)
+			initWatcher()
+			defer watcher.Close()
+			if keyInInstruction(InstExecWhenStart) {
+				taskMan.run(new(changedFile))
+			}
+			<-done
+			return			
 		case "version", "v", "-v", "--version":
 			fmt.Println(versionDesc)
 		case "help", "--help", "--h", "-h":
