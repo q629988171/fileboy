@@ -116,6 +116,8 @@ Usage of fileboy:
         读取当前目录下的 filegirl.yaml 配置，以守护进程的方式运行在后台
     stop 
         停止守护进程
+    profile 
+        指定配置文件	
     version 
         查看当前版本信息
 `
