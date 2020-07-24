@@ -6,9 +6,11 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"os/signal"
 	"path"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"gopkg.in/fsnotify/fsnotify.v1"
@@ -331,6 +333,20 @@ func parseArgs() {
 	}
 }
 
+func signalHandler() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		if taskMan != nil && taskMan.cmd != nil && taskMan.cmd.Process != nil {
+			if err := taskMan.cmd.Process.Kill(); err != nil {
+				logError("stopping the process failed: PID:", taskMan.cmd.ProcessState.Pid(), ":", err)
+			}
+		}
+		os.Exit(0)
+	}()
+}
+
 func getFileGirlPath() string {
 	return projectFolder + "/" + filegirlYamlName
 }
@@ -353,5 +369,6 @@ func main() {
 	if err != nil {
 		logAndExit(err)
 	}
+	signalHandler()
 	parseArgs()
 }
