@@ -1,3 +1,7 @@
+// Copyright (c) 2018-2020 Author dengsgo<dengsgo@yoytang.com> [https://github.com/dengsgo/fileboy]
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 package main
 
 import (
@@ -61,7 +65,7 @@ func (n *NetNotifier) dispatch(params *postParams) {
 		return
 	}
 	req.Header.Set("Content-Type", "application/json;charset=UTF-8")
-	req.Header.Set("User-Agent", "FileBoy Net Notifier v1.15")
+	req.Header.Set("User-Agent", "FileBoy Net Notifier v1.16")
 	resp, err := client.Do(req)
 	if err != nil {
 		logError("notifier call failed. err:", err)

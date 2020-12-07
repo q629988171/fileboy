@@ -1,3 +1,7 @@
+// Copyright (c) 2018-2020 Author dengsgo<dengsgo@yoytang.com> [https://github.com/dengsgo/fileboy]
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 package main
 
 import (
@@ -330,7 +334,7 @@ func signalHandler() {
 		<-c
 		if taskMan != nil && taskMan.cmd != nil && taskMan.cmd.Process != nil {
 			if err := taskMan.cmd.Process.Kill(); err != nil {
-				logError("stopping the process failed: PID:", taskMan.cmd.ProcessState.Pid(), ":", err)
+				logWarn("stopping the process failed: PID:", taskMan.cmd.ProcessState.Pid(), ":", err)
 			}
 		}
 		os.Exit(0)
