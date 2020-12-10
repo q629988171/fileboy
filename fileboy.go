@@ -76,6 +76,7 @@ func parseConfig() {
 	}
 	// init map
 	cfg.Monitor.TypesMap = map[string]bool{}
+	cfg.Monitor.ExceptTypesMap = map[string]bool{}
 	cfg.Monitor.IncludeDirsMap = map[string]bool{}
 	cfg.Monitor.ExceptDirsMap = map[string]bool{}
 	cfg.Monitor.IncludeDirsRec = map[string]bool{}
@@ -87,6 +88,9 @@ func parseConfig() {
 	for _, v := range cfg.Instruction {
 		cfg.InstructionMap[v] = true
 	}
+	for _, v := range cfg.Monitor.ExceptTypes {
+		cfg.Monitor.ExceptTypesMap[v] = true
+	}
 	log.Printf("%+v", cfg)
 }
 
@@ -96,8 +100,13 @@ func eventDispatcher(event fsnotify.Event) {
 	}
 	ext := path.Ext(event.Name)
 	if len(cfg.Monitor.Types) > 0 &&
-		!keyInMonitorTypesMap(".*", cfg) &&
-		!keyInMonitorTypesMap(ext, cfg) {
+		!keyInMonitorTypesMap(".*", cfg.Monitor.TypesMap) &&
+		!keyInMonitorTypesMap(ext, cfg.Monitor.TypesMap) {
+		return
+	}
+
+	if len(cfg.Monitor.ExceptTypes) > 0 &&
+		keyInMonitorTypesMap(ext, cfg.Monitor.ExceptTypesMap) {
 		return
 	}
 
