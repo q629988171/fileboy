@@ -1,3 +1,7 @@
+// Copyright (c) 2018-2020 Author dengsgo<dengsgo@yoytang.com> [https://github.com/dengsgo/fileboy]
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 package main
 
 import "strconv"
@@ -152,7 +156,7 @@ var statement = `Dengsgo [dengsgo@gmail.com] Open Source with MIT License`
 
 var versionDesc = `
  Version   fileboy: v1.16    filegirl: v` + strconv.Itoa(Version) + `
-Released   2020.10.17
+Released   2020.12.20
  Licence   MIT
   Author   dengsgo [dengsgo@gmail.com]
  Website   https://github.com/dengsgo/fileboy
