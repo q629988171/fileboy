@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020 Author dengsgo<dengsgo@yoytang.com> [https://github.com/dengsgo/fileboy]
+// Copyright (c) 2018-2021 Author dengsgo<dengsgo@yoytang.com> [https://github.com/dengsgo/fileboy]
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -56,9 +56,8 @@ func (n *NetNotifier) dispatch(params *postParams) {
 		logError("json.Marshal n.params. ", err)
 		return
 	}
-	client := &http.Client{
-		Timeout: time.Second * 15,
-	}
+	client := http.DefaultClient
+	client.Timeout = time.Second * 15
 	req, err := http.NewRequest("POST", n.CallUrl, bytes.NewBuffer(b))
 	if err != nil {
 		logError("http.NewRequest. ", err)
